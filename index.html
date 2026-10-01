@@ -31,11 +31,12 @@ main{
 h1{font-size:1.9rem; line-height:1.2; margin:0 0 6px}
 h1 .ge{color:var(--red)}
 p{margin:14px 0}
-.lead{font-size:1.1rem}
+.lead{font-size:1.1rem; text-wrap:balance}
+p{text-wrap:pretty}
 .btn{
   display:inline-block; margin:18px 0 4px; padding:16px 28px; border-radius:8px;
   background:var(--gold); color:#0D0D0D; font-weight:bold; font-size:1.05rem;
-  font-family:Arial,Helvetica,sans-serif; text-decoration:none;
+  font-family:Arial,Helvetica,sans-serif; text-decoration:none; text-wrap:balance;
 }
 .btn:hover,.btn:focus{background:#f2c445; outline:3px solid var(--navy); outline-offset:2px}
 .small{font-size:.9rem; color:var(--muted)}
@@ -50,7 +51,7 @@ a.gr{color:inherit; text-decoration:underline; text-underline-offset:3px}
 <main>
   <p class="kicker">A small favor</p>
   <h1>Help <span class="ge">Good Enough</span><br>find its next reader</h1>
-  <p class="lead">An honest review is one of the best ways a reader can help a book travel. It takes about a minute, and it means a great deal to me.</p>
+  <p class="lead">An honest review is one of the best ways a reader can help a book travel. It takes about a minute, and it means a&nbsp;great&nbsp;deal to&nbsp;me.</p>
 
   <a id="go" class="btn" href="https://mybook.to/goodenoughbook">Write your review on Amazon</a>
   <p class="small" id="note">Amazon may ask you to sign in first.</p>
@@ -65,7 +66,7 @@ a.gr{color:inherit; text-decoration:underline; text-underline-offset:3px}
     <a data-host="other" href="https://mybook.to/goodenoughbook">Anywhere else</a>
   </div>
 
-  <p class="sign">Thank you for your time and support.<br>Davide</p>
+  <p class="sign">Thank you,<br>Davide</p>
 </main>
 
 <script>
@@ -97,7 +98,7 @@ a.gr{color:inherit; text-decoration:underline; text-underline-offset:3px}
     var links = document.querySelectorAll(".stores a");
     if (host === "other"){
       go.href = FALLBACK;
-      go.textContent = "Find the book at your Amazon store";
+      go.textContent = "Find the book on Amazon";
       note.textContent = "From the book page, scroll to Customer reviews and choose Write a review.";
     } else {
       go.href = reviewUrl(host);
