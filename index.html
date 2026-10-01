@@ -28,7 +28,8 @@ main{
   font-family:"DIN Alternate","Arial Narrow",Arial,sans-serif; letter-spacing:.14em;
   text-transform:uppercase; font-size:.78rem; color:var(--gold-dark); margin:0 0 14px;
 }
-h1{font-size:1.9rem; line-height:1.2; margin:0 0 6px}
+h1{font-size:1.9rem; line-height:1.2; margin:0 0 6px; text-wrap:balance}
+@media (max-width:370px){ h1{font-size:1.5rem} main{padding:32px 20px 28px} }
 h1 .ge{color:var(--red)}
 p{margin:14px 0}
 .lead{font-size:1.1rem; text-wrap:balance}
@@ -50,12 +51,12 @@ a.gr{color:inherit; text-decoration:underline; text-underline-offset:3px}
 <body>
 <main>
   <p class="kicker">A small favor</p>
-  <h1>Help <span class="ge">Good Enough</span><br>find its next reader</h1>
+  <h1>Help <span class="ge">Good&nbsp;Enough</span><br>find its next&nbsp;reader</h1>
   <p class="lead">An honest review is one of the best ways a reader can help a book travel. It takes about a minute, and it means a&nbsp;great&nbsp;deal to&nbsp;me.</p>
 
   <a id="go" class="btn" href="https://mybook.to/goodenoughbook">Write your review on Amazon</a>
   <p class="small" id="note">Amazon may ask you to sign in first.</p>
-  <p class="small">Prefer Goodreads? <a class="gr" href="https://www.goodreads.com/book/isbn/9781636184609">Review it there</a>.</p>
+  <p class="small">No Amazon account? <a class="gr" href="https://www.goodreads.com/book/isbn/9781636184609">Review it on Goodreads</a> instead.</p>
 
   <div class="stores">
     <span class="small">Different store?</span><br>
