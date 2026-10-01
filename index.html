@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Leave a review | Good Enough</title>
+<meta name="description" content="An honest review helps Good Enough find its next reader.">
+<style>
+:root{
+  --bg:#FBF3DC; --card:#FFFFFF; --ink:#0D0D0D; --muted:#4a4a4a;
+  --navy:#272D4A; --gold:#E9B42A; --gold-dark:#BA9022; --red:#C90707; --line:#e6d9b0;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#1D2435; --card:#272D4A; --ink:#F6F1E3; --muted:#c9c6bb; --line:#3b4468; }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:Georgia,"Times New Roman",serif; line-height:1.6;
+  min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 16px;
+}
+main{
+  width:100%; max-width:560px; background:var(--card);
+  border:1px solid var(--line); border-top:6px solid var(--gold);
+  border-radius:10px; padding:40px 32px 32px; text-align:center;
+}
+.kicker{
+  font-family:"DIN Alternate","Arial Narrow",Arial,sans-serif; letter-spacing:.14em;
+  text-transform:uppercase; font-size:.78rem; color:var(--gold-dark); margin:0 0 14px;
+}
+h1{font-size:1.9rem; line-height:1.2; margin:0 0 6px}
+h1 .ge{color:var(--red)}
+p{margin:14px 0}
+.lead{font-size:1.1rem}
+.btn{
+  display:inline-block; margin:18px 0 4px; padding:16px 28px; border-radius:8px;
+  background:var(--gold); color:#0D0D0D; font-weight:bold; font-size:1.05rem;
+  font-family:Arial,Helvetica,sans-serif; text-decoration:none;
+}
+.btn:hover,.btn:focus{background:#f2c445; outline:3px solid var(--navy); outline-offset:2px}
+.small{font-size:.9rem; color:var(--muted)}
+.stores{margin-top:26px; padding-top:20px; border-top:1px solid var(--line); font-size:.95rem}
+.stores a{color:inherit; text-decoration:underline; text-underline-offset:3px; margin:0 8px; white-space:nowrap}
+.stores a[aria-current="true"]{font-weight:bold; text-decoration-color:var(--gold)}
+.sign{margin-top:26px; font-style:italic}
+a.gr{color:inherit; text-decoration:underline; text-underline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+  <p class="kicker">A small favor</p>
+  <h1>Help <span class="ge">Good Enough</span><br>find its next reader</h1>
+  <p class="lead">An honest review is one of the best ways a reader can help a book travel. It takes about a minute, and it means a great deal to me.</p>
+
+  <a id="go" class="btn" href="https://mybook.to/goodenoughbook">Write your review on Amazon</a>
+  <p class="small" id="note">Amazon may ask you to sign in first.</p>
+  <p class="small">Prefer Goodreads? <a class="gr" href="https://www.goodreads.com/book/isbn/9781636184609">Review it there</a>.</p>
+
+  <div class="stores">
+    <span class="small">Different store?</span><br>
+    <a data-host="www.amazon.com" href="#">United States</a>
+    <a data-host="www.amazon.co.uk" href="#">United Kingdom</a>
+    <a data-host="www.amazon.ca" href="#">Canada</a>
+    <a data-host="www.amazon.it" href="#">Italy</a>
+    <a data-host="other" href="https://mybook.to/goodenoughbook">Anywhere else</a>
+  </div>
+
+  <p class="sign">Thank you for your time and support.<br>Davide</p>
+</main>
+
+<script>
+(function(){
+  var ASIN = "163618460X";
+  var FALLBACK = "https://mybook.to/goodenoughbook";
+  var NAMES = {"www.amazon.com":"Amazon.com","www.amazon.co.uk":"Amazon.co.uk","www.amazon.ca":"Amazon.ca","www.amazon.it":"Amazon.it"};
+
+  function reviewUrl(host){ return "https://" + host + "/review/create-review?asin=" + ASIN; }
+
+  function detect(){
+    var lang = (navigator.language || "").toUpperCase();
+    var region = (lang.split("-")[1] || "");
+    var map = {US:"www.amazon.com", GB:"www.amazon.co.uk", CA:"www.amazon.ca", IT:"www.amazon.it"};
+    if (map[region]) return map[region];
+    if (lang.indexOf("IT") === 0 && !region) return "www.amazon.it";
+    var tz = "";
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch(e){}
+    if (tz === "Europe/London") return "www.amazon.co.uk";
+    if (tz === "Europe/Rome") return "www.amazon.it";
+    if (/^America\/(Toronto|Vancouver|Edmonton|Winnipeg|Halifax|Regina|St_Johns|Montreal)$/.test(tz)) return "www.amazon.ca";
+    if (/^America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Detroit|Boise|Indiana)/.test(tz)) return "www.amazon.com";
+    return "other";
+  }
+
+  function setTarget(host){
+    var go = document.getElementById("go");
+    var note = document.getElementById("note");
+    var links = document.querySelectorAll(".stores a");
+    if (host === "other"){
+      go.href = FALLBACK;
+      go.textContent = "Find the book at your Amazon store";
+      note.textContent = "From the book page, scroll to Customer reviews and choose Write a review.";
+    } else {
+      go.href = reviewUrl(host);
+      go.textContent = "Write your review on " + NAMES[host];
+      note.textContent = "Amazon may ask you to sign in first.";
+    }
+    for (var i = 0; i < links.length; i++){
+      links[i].removeAttribute("aria-current");
+      if (links[i].getAttribute("data-host") === host) links[i].setAttribute("aria-current","true");
+    }
+  }
+
+  var links = document.querySelectorAll(".stores a");
+  for (var i = 0; i < links.length; i++){
+    links[i].addEventListener("click", function(e){
+      e.preventDefault();
+      setTarget(this.getAttribute("data-host"));
+    });
+  }
+  setTarget(detect());
+})();
+</script>
+</body>
+</html>
